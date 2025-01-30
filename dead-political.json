@@ -1,0 +1,65 @@
+[
+    {
+        "name": "Absolute Monarchy",
+        "start": 800,
+        "end": 1800,
+        "origin": "Medieval Europe",
+        "reason_for_dying_out": "Rise of constitutional monarchies and republics"
+    },
+    {
+        "name": "Feudalism",
+        "start": 900,
+        "end": 1500,
+        "origin": "Medieval Europe",
+        "reason_for_dying_out": "Centralization of power and development of nation-states"
+    },
+    {
+        "name": "Ancient Athenian Democracy",
+        "start": 508,
+        "end": 322,
+        "origin": "Athens, Ancient Greece",
+        "reason_for_dying_out": "Conquest by Macedon and changes in political structure"
+    },
+    {
+        "name": "Roman Republic",
+        "start": 509,
+        "end": 27,
+        "origin": "Ancient Rome",
+        "reason_for_dying_out": "Transition to the Roman Empire"
+    },
+    {
+        "name": "Soviet Communism",
+        "start": 1917,
+        "end": 1991,
+        "origin": "Russian Revolution",
+        "reason_for_dying_out": "Collapse of the Soviet Union"
+    },
+    {
+        "name": "Confederate States of America",
+        "start": 1861,
+        "end": 1865,
+        "origin": "Secession from the United States",
+        "reason_for_dying_out": "Defeat in the American Civil War"
+    },
+    {
+        "name": "Ancient Egyptian Theocracy",
+        "start": -3150,
+        "end": -30,
+        "origin": "Predynastic Egypt",
+        "reason_for_dying_out": "Conquest by the Roman Empire"
+    },
+    {
+        "name": "Nazi Germany",
+        "start": 1933,
+        "end": 1945,
+        "origin": "Rise of the Nazi Party",
+        "reason_for_dying_out": "Defeat in World War II"
+    },
+    {
+        "name": "Imperial Japan",
+        "start": 1868,
+        "end": 1947,
+        "origin": "Meiji Restoration",
+        "reason_for_dying_out": "Defeat in World War II and adoption of a new constitution"
+    }
+]
