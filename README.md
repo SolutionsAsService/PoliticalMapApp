@@ -18,6 +18,8 @@ Open the printed URL. Opening `index.html` directly will not work, because the d
 
 ## Data
 
+Curated systems are in `data/systems.json`. `data/countries.json` is generated from the [CountryData](https://github.com/SolutionsAsService/CountryData) atlas by `python3 scripts/import-countrydata.py <path-to-CountryData>`; the charts can add it with one click.
+
 All content lives in `data/systems.json`. Years are signed (negative = BCE); `end: null` means still in existence. Check your edit with:
 
 ```bash

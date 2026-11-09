@@ -24,7 +24,8 @@ Gov.boot('systems', function (data, G) {
     '<figure class="locator"><figcaption>Where it sits in time: the grey shape is how many systems were alive in each year; the band is this one.</figcaption><svg id="loc" role="img" aria-label="' + esc(s.name) + ' located on the full timeline"></svg></figure>' +
     '<div class="two"><div><h2>The story</h2><dl class="facts">' +
     '<div><dt>In brief</dt><dd>' + esc(s.summary) + '</dd></div>' +
-    '<div><dt>Where</dt><dd>' + esc(s.region) + '</dd></div>' +
+    (s.region ? '<div><dt>Where</dt><dd>' + esc(s.region) + '</dd></div>' : '') +
+    (s.govType ? '<div><dt>Government type as recorded</dt><dd>' + esc(s.govType) + '</dd></div>' : '') +
     '<div><dt>How it began</dt><dd>' + esc(s.origin) + '</dd></div>' +
     '<div><dt>' + (s.end == null ? 'Today' : 'How it ended') + '</dt><dd>' + esc(s.ending) + '</dd></div>' +
     G.lineage(s, byId, data) + '</dl>' +
@@ -41,7 +42,7 @@ Gov.boot('systems', function (data, G) {
     (next ? '<a href="system.html?id=' + next.id + '">Began later: ' + esc(next.name) + ' &rarr;</a>' : '<span></span>') + '</nav>';
 
   function draw() {
-    G.skyline($('#loc'), data, { height: 120, mute: true, band: { a: s.start, b: G.endY(s), family: s.family } });
+    G.skyline($('#loc'), s.kind === 'state' ? data : G.curated(data), { height: 120, mute: true, band: { a: s.start, b: G.endY(s), family: s.family } });
   }
   draw();
   var rt; window.addEventListener('resize', function () { clearTimeout(rt); rt = setTimeout(draw, 80); });

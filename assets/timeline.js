@@ -1,6 +1,7 @@
 /* Timeline: lanes by family, bars packed into rows, zoom by pixels-per-year inside a sideways scroller. */
-Gov.boot('timeline', function (data, G) {
+Gov.boot('timeline', function (all, G) {
   var $ = G.$, esc = G.esc, D0 = G.DOMAIN[0], D1 = G.DOMAIN[1];
+  var data = all; // lookups cover everything; matches() decides what is drawn
   var byId = {}; data.forEach(function (s) { byId[s.id] = s; });
   var scroller = $('#scroller'), detail = $('#detail'), viewEl = $('#view');
   var ERAS = [
@@ -12,7 +13,7 @@ Gov.boot('timeline', function (data, G) {
     { label: 'Modern', a: 1800, b: D1 }
   ];
   var ROW = 30, BAR = 24, HEAD = 30, AXIS = 34, MIN_W = 8;
-  var st = { ppy: 0, fam: {}, status: 'all', q: '', sel: null, era: 0 };
+  var st = { ppy: 0, fam: {}, status: 'all', q: '', sel: null, era: 0, states: false };
   G.FAMILIES.forEach(function (f) { st.fam[f.id] = true; });
 
   var ctx = document.createElement('canvas').getContext('2d');
@@ -33,6 +34,7 @@ Gov.boot('timeline', function (data, G) {
   }).join('') + '</div>';
 
   function matches(s) {
+    if (s.kind === 'state' && !st.states) return false;
     if (!st.fam[s.family]) return false;
     if (st.status === 'ended' && s.end == null) return false;
     if (st.status === 'ongoing' && s.end != null) return false;
@@ -196,6 +198,13 @@ Gov.boot('timeline', function (data, G) {
     scroller.scrollLeft = Math.max(0, (mid - D0) * st.ppy - cw() / 2);
     stickyLabels(); updateView();
   }
+  $('#states').textContent = 'Add ' + G.fmtN(G.states(all).length) + ' countries from CountryData';
+  $('#states').addEventListener('click', function (e) {
+    st.states = !st.states;
+    e.target.setAttribute('aria-pressed', String(st.states));
+    e.target.textContent = st.states ? 'Countries added (' + G.fmtN(G.states(all).length) + ')' : 'Add ' + G.fmtN(G.states(all).length) + ' countries from CountryData';
+    var l = scroller.scrollLeft; render(); scroller.scrollLeft = l; stickyLabels(); updateView();
+  });
   $('#eras').addEventListener('click', function (e) { var b = e.target.closest('[data-era]'); if (b) setEra(+b.dataset.era); });
   $('#zin').addEventListener('click', function () { zoom(1.6); });
   $('#zout').addEventListener('click', function () { zoom(1 / 1.6); });
@@ -224,6 +233,7 @@ Gov.boot('timeline', function (data, G) {
 
   // start: Whole record, or the hash target
   var initial = byId[location.hash.slice(1)] ? location.hash.slice(1) : null;
+  if (initial && byId[initial].kind === 'state') { st.states = true; $('#states').setAttribute('aria-pressed', 'true'); }
   st.sel = initial;
   st.ppy = clampPPY(cw() / (D1 - D0)); st.era = 0;
   render();

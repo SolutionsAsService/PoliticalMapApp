@@ -67,12 +67,18 @@
   }
 
   // Figures printed anywhere on the site: one function, so one place to audit.
-  function figures(data) {
+  function curated(data) { return data.filter(function (s) { return s.kind !== 'state'; }); }
+  function states(data) { return data.filter(function (s) { return s.kind === 'state'; }); }
+  function figures(all) {
+    var data = curated(all), st = states(all);
     var ongoing = data.filter(function (s) { return s.end == null; }).length;
     var c = counts(data, 1);
     var longest = data.slice().sort(function (a, b) { return dur(b) - dur(a); })[0];
     return {
       count: data.length,
+      states: st.length,
+      statesNow: st.filter(function (s) { return s.end == null; }).length,
+      total: all.length,
       families: FAMILIES.length,
       years: DOMAIN[1] - DOMAIN[0],
       ongoing: ongoing,
@@ -121,12 +127,16 @@
   }
 
   function load() {
-    return fetch(new URL('data/systems.json', document.baseURI)).then(function (r) {
-      if (!r.ok) throw new Error('data/systems.json: HTTP ' + r.status);
-      return r.json();
-    }).then(function (data) {
-      data.sort(function (a, b) { return a.start - b.start || endY(a) - endY(b); });
-      return data;
+    function get(path) {
+      return fetch(new URL(path, document.baseURI)).then(function (r) {
+        if (!r.ok) throw new Error(path + ': HTTP ' + r.status);
+        return r.json();
+      });
+    }
+    return Promise.all([get('data/systems.json'), get('data/countries.json')]).then(function (both) {
+      var all = both[0].map(function (s) { s.kind = 'system'; return s; }).concat(both[1]);
+      all.sort(function (a, b) { return a.start - b.start || endY(a) - endY(b); });
+      return all;
     });
   }
 
@@ -173,7 +183,8 @@
     var m = { l: 30, r: 10, t: 10, b: 26 };
     var pw = W - m.l - m.r, ph = H - m.t - m.b;
     var c = counts(data, 10);
-    var maxN = Math.max(5, Math.ceil(c.peak.n / 5) * 5);
+    var gstep = c.peak.n <= 25 ? 5 : c.peak.n <= 60 ? 10 : c.peak.n <= 150 ? 25 : 50;
+    var maxN = Math.max(5, Math.ceil(c.peak.n / gstep) * gstep);
     function x(y) { return m.l + (y - DOMAIN[0]) / (DOMAIN[1] - DOMAIN[0]) * pw; }
     function yOf(n) { return m.t + ph - n / maxN * ph; }
     function yearOf(px) {
@@ -194,7 +205,7 @@
     var h = '<title>Number of governance systems alive in each year, by family</title>';
     // gridlines
     var g, tickYears = pw < 520 ? [-3000, -1000, 1, 1000, 2000] : [-3000, -2000, -1000, 1, 1000, 2000];
-    for (g = 0; g <= maxN; g += 5) {
+    for (g = 0; g <= maxN; g += gstep) {
       h += '<line class="grid" x1="' + m.l + '" x2="' + (W - m.r) + '" y1="' + yOf(g).toFixed(1) + '" y2="' + yOf(g).toFixed(1) + '"/>';
       if (!opts.mute || g === 0 || g === maxN) h += '<text class="ytick" x="' + (m.l - 6) + '" y="' + (yOf(g) + 4).toFixed(1) + '" text-anchor="end">' + g + '</text>';
     }
@@ -230,7 +241,7 @@
   var G = {
     DOMAIN: DOMAIN, FAMILIES: FAMILIES, famById: famById, REPO: REPO,
     esc: esc, $: $, $$: $$, fmtN: fmtN, yr: yr, endY: endY, dur: dur, fmtRange: fmtRange,
-    alive: alive, overlap: overlap, counts: counts, figures: figures,
+    alive: alive, overlap: overlap, curated: curated, states: states, counts: counts, figures: figures,
     link: link, familyTag: familyTag, lineage: lineage, skyline: skyline, boot: boot, load: load
   };
   window.Gov = G;

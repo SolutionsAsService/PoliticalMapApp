@@ -1,6 +1,7 @@
 /* Landing: the skyline of governance systems with a draggable year marker. */
-Gov.boot(null, function (data, G, fig) {
+Gov.boot(null, function (all, G, fig) {
   var $ = G.$, esc = G.esc;
+  var withStates = false, data = G.curated(all);
   var svg = $('#sky'), legend = $('#legend'), chips = $('#chips'), head = $('#count-head'), jumps = $('#jumps');
   var year = 1800, sky = null, drag = false;
   var STOPS = [-500, 1, 1000, 1500, 1800, G.DOMAIN[1]];
@@ -50,9 +51,9 @@ Gov.boot(null, function (data, G, fig) {
       var n = now.filter(function (s) { return s.family === f.id; }).length;
       return '<li class="fam-' + f.id + '" data-zero="' + (n === 0) + '"><i class="dot" aria-hidden="true"></i><span class="l-full">' + esc(f.label) + '</span><span class="l-short">' + esc(f.short) + '</span><b>' + n + '</b></li>';
     }).join('');
-    chips.innerHTML = now.map(function (s) {
+    chips.innerHTML = now.slice(0, 36).map(function (s) {
       return '<li class="fam-' + s.family + '"><a href="system.html?id=' + encodeURIComponent(s.id) + '">' + esc(s.name) + '</a></li>';
-    }).join('');
+    }).join('') + (now.length > 36 ? '<li class="more-note">and ' + (now.length - 36) + ' more. <a href="systems.html">See the full list</a></li>' : '');
     jumps.querySelectorAll('button').forEach(function (b) {
       b.setAttribute('aria-pressed', String(Number(b.dataset.y) === year));
     });
@@ -67,9 +68,20 @@ Gov.boot(null, function (data, G, fig) {
 
   // jump buttons, plus the computed peak
   var peakY = G.counts(data, 1).peak.year;
+  function peakBtn() { var py = G.counts(data, 1).peak.year; var b = $('#peak'); b.dataset.y = py; b.textContent = 'Peak (' + labelFor(py) + ')'; }
   jumps.insertAdjacentHTML('beforeend', STOPS.map(function (y) {
     return '<button type="button" data-y="' + y + '">' + (y === G.DOMAIN[1] ? 'Now' : labelFor(y)) + '</button>';
-  }).join('') + '<button type="button" data-y="' + peakY + '" title="The year with the most systems alive">Peak (' + labelFor(peakY) + ')</button>');
+  }).join('') + '<button type="button" id="peak" data-y="' + peakY + '" title="The year with the most systems alive">Peak (' + labelFor(peakY) + ')</button>');
+  var tg = $('#states-toggle');
+  tg.textContent = 'Add ' + G.fmtN(G.states(all).length) + ' countries from CountryData';
+  tg.addEventListener('click', function () {
+    withStates = !withStates;
+    data = withStates ? all : G.curated(all);
+    tg.setAttribute('aria-pressed', String(withStates));
+    tg.textContent = withStates ? 'Showing ' + G.fmtN(all.length) + ' systems and countries' : 'Add ' + G.fmtN(G.states(all).length) + ' countries from CountryData';
+    $('#state-note').hidden = !withStates;
+    draw(); peakBtn();
+  });
   jumps.addEventListener('click', function (e) {
     var b = e.target.closest('button');
     if (b) setYear(Number(b.dataset.y));

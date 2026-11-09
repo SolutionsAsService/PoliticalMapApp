@@ -1,11 +1,12 @@
 Gov.boot('systems', function (data, G) {
-  var $ = G.$, esc = G.esc, st = { q: '', fam: '', status: 'all', key: 'start', dir: 1 };
+  var $ = G.$, esc = G.esc, st = { kind: 'system', q: '', fam: '', status: 'all', key: 'start', dir: 1 };
   $('#fam').insertAdjacentHTML('beforeend', G.FAMILIES.map(function (f) { return '<option value="' + f.id + '">' + esc(f.label) + '</option>'; }).join(''));
   function val(s, k) {
     return k === 'dur' ? G.dur(s) : k === 'end' ? G.endY(s) : k === 'name' ? s.name.toLowerCase() : k === 'family' ? G.famById[s.family].label : k === 'region' ? s.region : s.start;
   }
   function render() {
     var rows = data.filter(function (s) {
+      if (st.kind !== 'all' && s.kind !== st.kind) return false;
       if (st.fam && s.family !== st.fam) return false;
       if (st.status === 'ended' && s.end == null) return false;
       if (st.status === 'ongoing' && s.end != null) return false;
@@ -31,6 +32,7 @@ Gov.boot('systems', function (data, G) {
     });
   });
   $('#q').addEventListener('input', function (e) { st.q = e.target.value.trim().toLowerCase(); render(); });
+  $('#kind').addEventListener('change', function (e) { st.kind = e.target.value; render(); });
   $('#fam').addEventListener('change', function (e) { st.fam = e.target.value; render(); });
   $('#status').addEventListener('change', function (e) { st.status = e.target.value; render(); });
   render();
