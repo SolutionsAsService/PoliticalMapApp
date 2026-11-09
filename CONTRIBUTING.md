@@ -10,6 +10,7 @@ docs, new features, data corrections and ideas.
 - **Suggest an idea.** Open an issue describing the problem it solves before writing a lot of code,
   so we can agree on the approach first.
 - **Send a fix.** Small, focused pull requests are reviewed fastest.
+- **Correct or add a system.** Edit `data/systems.json` (fields are described on the About page), run `node scripts/check-data.mjs`, and cite a source in the pull request.
 
 ## Getting set up
 

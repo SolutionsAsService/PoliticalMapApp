@@ -1,15 +1,64 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Political Governance Systems Timeline</title>
-    <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Ages of Rule: a timeline of governance systems</title>
+  <meta name="description" content="Every way people have governed themselves in this record, from Sumerian city-states to the European Union, drawn as the number of systems alive in each year.">
+  <meta property="og:title" content="Ages of Rule: a timeline of governance systems">
+  <meta property="og:description" content="Drag a marker through more than 5,000 years and see which systems of government were alive.">
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="assets/site.css">
 </head>
 <body>
-    <h1>Political Governance Systems Timeline</h1>
-    <div id="timeline"></div>
-    <script src="https://d3js.org/d3.v6.min.js"></script>
-    <script src="script.js"></script>
+<main id="main" class="wrap hero">
+  <div class="hero-top">
+    <div>
+      <p class="eyebrow"><span data-fig="count">–</span> systems &middot; <span data-fig="years">–</span> years &middot; <span data-fig="families">–</span> families</p>
+      <h1>Ages of Rule</h1>
+    </div>
+    <p class="lede">A timeline of the ways people have governed themselves. The chart counts the systems alive in each year. Drag the marker to see which ones.</p>
+  </div>
+
+  <figure class="figure" id="figure">
+    <svg id="sky" role="group" aria-label="Systems alive in each year, with a draggable year marker"></svg>
+    <ul class="legend" id="legend" aria-label="Systems alive at the marker, by family"></ul>
+  </figure>
+
+  <p class="caveat">Each system counts once, whatever its size, and some entries are types of rule rather than states. The record leans toward Europe, the Mediterranean and Asia. <a href="about.html">What is missing</a>.</p>
+
+  <div class="jumps" id="jumps" role="group" aria-label="Jump the marker to a year"><span>Jump to</span></div>
+
+  <section class="readout" aria-live="polite" aria-atomic="false">
+    <h2 id="count-head"></h2>
+    <ul class="chips" id="chips"></ul>
+  </section>
+
+  <div class="cta">
+    <a class="primary" href="timeline.html">Open the full timeline &rarr;</a>
+    <a href="systems.html">Browse all systems</a>
+  </div>
+
+  <div class="sections">
+    <section>
+      <h2>Timeline</h2>
+      <p>Every system as a bar, grouped by family. Zoom to an era, filter, search, and open any bar for its story.</p>
+      <a href="timeline.html">See it by family &rarr;</a>
+    </section>
+    <section>
+      <h2>All systems</h2>
+      <p>A sortable index: when each began and ended, how long it lasted, and where.</p>
+      <a href="systems.html">Open the index &rarr;</a>
+    </section>
+    <section>
+      <h2>About the data</h2>
+      <p>What counts as a system, how dates work, and whose history is still missing.</p>
+      <a href="about.html">Read the method &rarr;</a>
+    </section>
+  </div>
+</main>
+<noscript><p class="notice wrap">This site draws its charts with JavaScript. The raw data is in <a href="data/systems.json">data/systems.json</a>.</p></noscript>
+<script src="assets/common.js"></script>
+<script src="assets/home.js"></script>
 </body>
 </html>

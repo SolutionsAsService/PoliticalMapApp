@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>About the data | Ages of Rule</title>
+  <meta name="description" content="What counts as a governance system, how dates work, what is missing, and how to correct the data.">
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="assets/site.css">
+</head>
+<body>
+<main id="main" class="wrap page">
+  <h1>About the data</h1>
+  <p class="sub"><span data-fig="count">–</span> systems, <span data-fig="ended">–</span> ended and <span data-fig="ongoing">–</span> still in existence; <span data-fig="approx">–</span> carry approximate dates. Longest lived in this record: <span data-fig="longest">–</span>, <span data-fig="longestYears">–</span> years.</p>
+  <div class="prose">
+    <h2>What counts as a system</h2>
+    <p>An entry is a way of organising political authority that lasted long enough to have a recognisable shape: a state, an empire, a confederation, or a type of rule such as feudalism or constitutional monarchy. Types and individual states sit side by side, so some entries overlap in meaning (the Roman Empire is also an empire in the ordinary sense). Each entry has exactly one family, which is a simplification: many systems were hybrids.</p>
+    <h2>How dates work</h2>
+    <ul>
+      <li>Years are signed: negative means BCE. There is no year 0, as in the historical calendar.</li>
+      <li>A start or end is a conventional marker (a coronation, a treaty, a defeat), not the moment a society changed overnight.</li>
+      <li>Where scholars disagree, the entry is flagged <code>approx</code> and drawn with a dashed inner outline.</li>
+      <li>A system with no end is drawn with a pointed end and measured up to the present year.</li>
+    </ul>
+    <h2>What is missing</h2>
+    <p>The record leans toward Europe, the Mediterranean, the Near East and East Asia, and toward societies that kept state archives. Many African, Pacific, Andean and Amazonian polities, and most non-state societies, are absent or thin. A longer list would change the shape of the chart. Absence here is a limit of this dataset, not a verdict on those societies.</p>
+    <h2>Corrections</h2>
+    <p>If a fact is wrong, <a href="https://github.com/SolutionsAsService/PoliticalMapApp/issues">open an issue</a> with a source. The data is one file, <a href="data/systems.json">data/systems.json</a>, and every figure on this site is computed from it.</p>
+    <h2>Fields</h2>
+    <table>
+      <thead><tr><th>Field</th><th>Meaning</th></tr></thead>
+      <tbody>
+        <tr><td><code>id</code></td><td>Unique slug used in links</td></tr>
+        <tr><td><code>name</code>, <code>family</code></td><td>Display name and one of seven families</td></tr>
+        <tr><td><code>start</code>, <code>end</code></td><td>Signed years; <code>end: null</code> means still in existence</td></tr>
+        <tr><td><code>approx</code></td><td>Optional; true when either date is disputed</td></tr>
+        <tr><td><code>region</code>, <code>origin</code>, <code>ending</code>, <code>summary</code></td><td>Where, how it began, how it ended, and one plain sentence or two</td></tr>
+        <tr><td><code>next</code></td><td>Optional ids of the systems it directly became</td></tr>
+      </tbody>
+    </table>
+    <h2>What changed in this version</h2>
+    <p>The first version held nine ended systems and did not load. It has been rebuilt with more systems, systems that still exist, and corrected dates: Athens and Rome had positive years where BCE was meant. Two start dates were also revised: Absolute monarchy now begins in 1500 rather than 800, and the Mongol and British entries are flagged approximate.</p>
+  </div>
+</main>
+<script src="assets/common.js"></script>
+<script src="assets/about.js"></script>
+</body>
+</html>

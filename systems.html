@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>All governance systems | Ages of Rule</title>
+  <meta name="description" content="A sortable index of every governance system in the timeline: when it began and ended, how long it lasted and where.">
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="assets/site.css">
+</head>
+<body>
+<main id="main" class="wrap page">
+  <h1>All systems</h1>
+  <p class="sub">Sort by any column. Open a system for its overlaps and neighbours in time.</p>
+  <div class="tools" role="group" aria-label="Filters">
+    <div class="group"><label for="q">Search</label><input id="q" type="search" placeholder="name or place" autocomplete="off"></div>
+    <div class="group"><label for="fam">Family</label><select id="fam"><option value="">All families</option></select></div>
+    <div class="group"><label for="status">Show</label><select id="status"><option value="all">All</option><option value="ended">Ended</option><option value="ongoing">Still in existence</option></select></div>
+  </div>
+  <p class="count" id="count" aria-live="polite"></p>
+  <div class="table-wrap"><table class="idx">
+    <thead><tr>
+      <th scope="col" aria-sort="none"><button type="button" data-k="name">System</button></th>
+      <th scope="col"><button type="button" data-k="family">Family</button></th>
+      <th scope="col"><button type="button" data-k="start">Began</button></th>
+      <th scope="col"><button type="button" data-k="end">Ended</button></th>
+      <th scope="col"><button type="button" data-k="dur">Lasted</button></th>
+      <th scope="col"><button type="button" data-k="region">Where</button></th>
+    </tr></thead>
+    <tbody id="rows"></tbody>
+  </table></div>
+</main>
+<script src="assets/common.js"></script>
+<script src="assets/systems.js"></script>
+</body>
+</html>

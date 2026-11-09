@@ -1,0 +1,1 @@
+Gov.boot('about', function () {});

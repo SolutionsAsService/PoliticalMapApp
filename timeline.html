@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Timeline of governance systems | Ages of Rule</title>
+  <meta name="description" content="Every system as a bar from its start to its end, grouped by family. Zoom to an era, filter, search and open any bar.">
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="assets/site.css">
+</head>
+<body>
+<main id="main" class="wrap page">
+  <h1>Timeline</h1>
+  <p class="sub">One bar per system, grouped by family. Scroll sideways or jump to an era; select a bar for the story and its neighbours in time.</p>
+
+  <div class="tools" role="toolbar" aria-label="Timeline controls">
+    <div class="group" id="eras" role="group" aria-label="Era"><span class="lbl">Era</span></div>
+    <div class="group" role="group" aria-label="Zoom">
+      <button type="button" id="zout" aria-label="Zoom out">&minus;</button>
+      <button type="button" id="zin" aria-label="Zoom in">+</button>
+    </div>
+    <div class="group"><label for="q">Search</label><input id="q" type="search" placeholder="name or place" autocomplete="off"></div>
+    <div class="group"><label for="status">Show</label>
+      <select id="status"><option value="all">All systems</option><option value="ended">Ended</option><option value="ongoing">Still in existence</option></select>
+    </div>
+  </div>
+  <div class="tools" role="group" aria-label="Families" id="fams"></div>
+  <p class="view-readout" id="view" aria-live="off"></p>
+
+  <div class="tl">
+    <div id="scroller" tabindex="0" role="region" aria-label="Timeline chart, scrolls sideways"></div>
+    <aside class="detail" id="detail" aria-label="Selected system"></aside>
+  </div>
+</main>
+<noscript><p class="notice wrap">This chart needs JavaScript. The raw data is in <a href="data/systems.json">data/systems.json</a>.</p></noscript>
+<script src="assets/common.js"></script>
+<script src="assets/timeline.js"></script>
+</body>
+</html>
